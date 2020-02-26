@@ -1,16 +1,19 @@
-import React,{useState, useReducer} from 'react';
+import React,{useState, useReducer,useEffect} from 'react';
 import {View} from 'react-native'
 import { Text, Input, Icon, Button } from 'react-native-elements';
 import style from './../style/style'
 import * as Animatable from 'react-native-animatable';
 import {connect} from 'react-redux'
 import {onUserRegister} from './../redux/actions'
+import {CommonActions} from '@react-navigation/native'
 
 
 const reducers=(state,action)=>{
     switch(action.type){
         case 'Change-data':
             return {...state,[action.name]:action.payload};
+        case 'balikstate':
+            return {email:'',username:'',password:'',conpassword:''}
         default:
             return state
     }
@@ -18,10 +21,40 @@ const reducers=(state,action)=>{
 
 
 // fbec40e5-2d70-4792-841e-f54876f1cdaa
-const Register=({navigation})=>{
+const Register=({navigation,loading,error,user,onUserRegister})=>{
     const [state,dispatch]=useReducer(reducers,{email:'',username:'',password:'',conpassword:''})
     const [passHidden,setpassHidden]=useState(true)
     const [conpassHidden,setconpassHidden]=useState(true)
+
+    useEffect(()=>{
+        if(user
+            && state.email !== '' 
+            && state.username !== '' 
+            && state.password !== ''
+            && state.conpassword !== ''
+        ){
+            dispatch({type:'balikstate'})
+            const resetAction = CommonActions.reset({
+                index: 0,
+                routes: [
+                    {name:'Drawermain'}
+                ],
+            });
+            navigation.dispatch(resetAction);
+        }
+    })
+
+
+    const onBtnRegisterPress=()=>{
+        if(!loading) {
+            onUserRegister({
+                email: state.email,
+                username: state.username,
+                password: state.password,
+                conPassword: state.conpassword
+            })
+        }
+    }
     return(
         <View style={style.RegcontainerStyle}>
             <Animatable.Text animation={'fadeInDown'} duration={2000}>
@@ -95,12 +128,13 @@ const Register=({navigation})=>{
                     onChangeText={(text)=>dispatch({type:'Change-data',name:'conpassword',payload:text})}
                 />
             </View>
+            <Text style={{color:'red'}}>{error}</Text>
             <Button
                     title="Register"
                     containerStyle={{ width: '95%', marginBottom: 10 }}
                     buttonStyle={{ backgroundColor: 'black' }}
-                    // onPress={this.onBtnRegisterPress}
-                    // loading={true}
+                    onPress={onBtnRegisterPress}
+                    loading={loading}
                 />
             <Button
                 title="Back to Login"
@@ -112,7 +146,14 @@ const Register=({navigation})=>{
             />
         </View>
     )
-}   
+}  
 
+const mapStateToProps = ({ auth }) => {
+    return { 
+        error: auth.errorRegister, 
+        loading: auth.loadingRegister,
+        user: auth.user
+    }
+}
 
-export default Register
+export default connect(mapStateToProps,{onUserRegister})(Register);

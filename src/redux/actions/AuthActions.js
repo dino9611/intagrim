@@ -2,7 +2,14 @@ import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 import { API_URL } from './../../support/apiUrl';
 
-
+import{
+    START_REGISTER,
+    START_LOGIN,
+    REGISTER_FAILED,
+    LOGIN_FAILED,
+    USER_LOGOUT,
+    LOGIN_USER_SUCCESS
+}from './types'
 
 
 export const onUserRegister = ({email,username,password,conPassword}) => {
