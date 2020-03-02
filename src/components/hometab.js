@@ -51,33 +51,6 @@ const Tabnavigation=()=>{
             <Tab.Screen name='Profile' component={Profile}/>
         </Tab.Navigator>
 
-        // <Tab.Navigator 
-        //     initialRouteName='Home'
-        //     screenOptions={({ route }) => ({
-        //         tabBarIcon: ({ focused, color, size }) => {
-        //             let iconName;
-        
-        //             if (route.name === 'Home') {
-        //                 iconName = focused
-        //                     ? 'home'
-        //                     : 'home';
-        //             } else if (route.name === 'Profiledraw') {
-        //                 iconName = focused ? 'settings' : 'settings';
-        //             }
-        
-        //             // You can return any component that you like here!
-        //             return <Icon name={iconName} size={size} color={color} />;
-        //         },
-        //     })}
-        //     tabBarOptions={{
-        //         activeTintColor: 'tomato',
-        //         inactiveTintColor: 'gray',
-        //         showLabel:false
-        //     }}
-        // >
-        //     <Tab.Screen name="Home" component={Home} />
-        //     <Tab.Screen name="Profiledraw" component={Profiledraw} />
-        // </Tab.Navigator>
     )
 }
 
