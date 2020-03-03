@@ -9,7 +9,8 @@ import Home from './home'
 import Search from './search'
 import Add from './add'
 import Like from './like'
-import Profile from './profile'
+
+import StackProfile from './Stackprofile'
 
 const Tab = createBottomTabNavigator();
 const Tabnavigation=()=>{
@@ -23,7 +24,7 @@ const Tabnavigation=()=>{
                         iconName = focused
                             ? 'home'
                             : 'home';
-                    } else if (route.name === 'Profile') {
+                    } else if (route.name === 'StackProfile') {
                         iconName = focused ? 'account-box' : 'account-box';
                     }else if(route.name==='Search'){
                         iconName=focused?'search':'search'
@@ -48,7 +49,7 @@ const Tabnavigation=()=>{
             <Tab.Screen name='Search' component={Search}/>
             <Tab.Screen name='Add' component={Add}/>
             <Tab.Screen name='Like' component={Like}/>
-            <Tab.Screen name='Profile' component={Profile}/>
+            <Tab.Screen name='StackProfile' component={StackProfile}/>
         </Tab.Navigator>
 
     )
